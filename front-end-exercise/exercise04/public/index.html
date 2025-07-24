@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+</head>
+<body>
+    <h1>Let's enjoy some jokes!</h1>
+    <!-- Button to call the async get function from API-->
+     <button id="jokeButton" onclick="getJoke()">Get a Joke</button>
+     <p id="jokeDisplay"></p>
+
+     <script>
+        async function getJoke(){
+            const response = await fetch('/joke');
+            const data = await response.json();
+
+            let joketext = '';
+            if(data.type==='single'){
+                joketext = data.joke;
+            }else if(data.type==='twopart'){
+                joketext = data.setup + '<br>' + data.delivery;
+            }else{
+                joketext = 'No joke available'; 
+            }
+
+            document.getElementById('jokeDisplay').innerHTML = joketext;
+        }
+     </script>
+</body>
+</html>
